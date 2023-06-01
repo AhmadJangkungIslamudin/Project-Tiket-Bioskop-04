@@ -1,4 +1,4 @@
-#LOGIN
+#LOGIN#
 def login(name,password):
     sukses = False
     file = open('logindatabase.txt','r')
