@@ -7,4 +7,6 @@ def sungregis():
             password = input("Masukkan Password Baru : ")
             register(name,password)
             print("Register berhasil, silahkan login")
+
+            
 sungregis()
