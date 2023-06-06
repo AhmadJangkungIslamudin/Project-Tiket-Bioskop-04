@@ -1,5 +1,34 @@
 import csv
 
+def menu():
+    list_Menu = ["Pemesanan tiket", "Pusat Bantuan"]
+    print("1. ", list_Menu[0])
+    print("2. ", list_Menu[1])
+    print("="*50)
+    while (True):
+        menu=input("Pilih menu: ")
+        if menu == "1":
+            file_film = open('Daftar Film.csv','r')
+            next(file_film)
+            x=1
+            film_list =[]
+            for i in file_film:
+                film = i.split(",")
+                film.insert(0,x)
+                print(film)
+                film_list.append(film)
+                x=x+1
+
+            print(film_list)
+            film_pilihan = int(input("Masukan kode film"))
+            x=0
+            for i in range (len(film_list)):
+                if film_pilihan == int(film_list[i][0]):
+                    film_pilihan = film_list[i]
+
+            print(film_pilihan)
+
+
 def login(name, password):
     sukses = False
     with open('loginscv.csv', 'r') as file:
@@ -14,7 +43,6 @@ def login(name, password):
         print("=" * 50)
         print("Login berhasil")
         print("=" * 50)
-
         menu()
             
     else:
@@ -23,6 +51,7 @@ def login(name, password):
         print("=" * 50)
         #langsung regis
         sungregis2 = input("Silahkan Registrasi (ya/tidak) : ")
+        sungregis2 = sungregis2.lower()
         if (sungregis2 != "ya" and sungregis2 != "tidak"):
             return sungregis2
 
@@ -74,31 +103,3 @@ def begin():
 
 begin()
 access(option)
-
-def menu():
-    list_Menu = ["Pemesanan tiket", "Pusat Bantuan"]
-    print("1. ", list_Menu[0])
-    print("2. ", list_Menu[1])
-    print("="*50)
-    while (True):
-        menu=input("Pilih menu: ")
-        if menu == "1":
-            file_film = open('Daftar Film.csv','r')
-            next(file_film)
-            x=1
-            film_list =[]
-            for i in file_film:
-                film = i.split(",")
-                film.insert(0,x)
-                print(film)
-                film_list.append(film)
-                x=x+1
-
-            print(film_list)
-            film_pilihan = int(input("Masukan kode film"))
-            x=0
-            for i in range (len(film_list)):
-                if film_pilihan == int(film_list[i][0]):
-                    film_pilihan = film_list[i]
-
-            print(film_pilihan)
