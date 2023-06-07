@@ -20,6 +20,7 @@ def login(name, password):
         print("="*50)
         #langsung regis
         sungregis2 = input("Silahkan Registrasi (ya/tidak) : ")
+        sungregis2 = sungregis2.lower()
         if (sungregis2 != "ya" and sungregis2 != "tidak"):
             return sungregis2
 
@@ -30,6 +31,7 @@ def login(name, password):
             print("="*50)
             print("Register berhasil, silahkan login")
             print("="*50)
+            access(option)
 
             
         else:
