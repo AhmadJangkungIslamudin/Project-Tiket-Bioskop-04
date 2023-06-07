@@ -1,5 +1,18 @@
 import csv
 
+def MENU():
+    with open('nama_file.csv', 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        data = list(reader)
+    column_widths = [max(len(str(item)) for item in column) for column in zip(*data)]
+    for row in data:
+        formatted_row = ' | '.join(f"{item:{width}}" for item, width in zip(row, column_widths))
+        print(formatted_row)
+    
+    with open('file_rapi.csv', 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
 def login(name, password):
     sukses = False
     with open('loginscv.csv', 'r') as file:
@@ -14,6 +27,7 @@ def login(name, password):
         print("="*50)
         print("Login berhasil")
         print("="*50)
+        menu()
     else:
         print("="*50)
         print("Anda belum terdaftar, silahkan registrasi")
@@ -33,7 +47,6 @@ def login(name, password):
             print("="*50)
             access(option)
 
-            
         else:
             print("="*50)
             print("Terima kasih telah menggunakan layanan kami")
@@ -76,18 +89,15 @@ begin()
 access(option)
 
 #=============================================================
-def MENU():
-    with open('Daftar Film.csv','r') as file_film:
-        next(file_film)
-
-    # menampilkan daftar film    
-    x=1
-    film_list =[]
-    for i in file_film:
-        film = i.split(",")
-        film.insert(0,x)
-        print(film)
-        film_list.append(film)
-        x=x+1
-
-    print(film_list)
+def mENU():
+    with open('nama_file.csv', 'r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        data = list(reader)
+    column_widths = [max(len(str(item)) for item in column) for column in zip(*data)]
+    for row in data:
+        formatted_row = ' | '.join(f"{item:{width}}" for item, width in zip(row, column_widths))
+        print(formatted_row)
+    
+    with open('file_rapi.csv', 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
