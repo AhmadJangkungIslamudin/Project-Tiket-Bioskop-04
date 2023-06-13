@@ -52,6 +52,7 @@ def signup():
     print("Register berhasil, silahkan login")
     print("=" * 50)
     begin() 
+    
 
 def menu():
     print("Ketik '1' Pemesanan tiket")
@@ -70,5 +71,4 @@ def menu():
     else:
         print('\nTidak terdapat dalam menu!\n')
         menu()
-
 begin()
