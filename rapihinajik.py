@@ -158,8 +158,12 @@ def pilih_jam():
             print("success")
             print_layout('')
             pilih_kursi()
+    elif input_jam_pilihan in jam_tersedia and jam_pilihan >=datetime.datetime.now().day:
+        print("success")
+        print_layout('')
+        pilih_kursi()
     else:
-        print("Jam tidak sesuai atau sudah terlewat")
+        print("Jam tidak tersedia")
         pilih_jam()
     
 #=== PILIH KURSI

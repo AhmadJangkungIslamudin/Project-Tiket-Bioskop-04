@@ -156,8 +156,7 @@ def pilihfilm(opsimenu):
             jam_pilihan = datetime.datetime.strptime(input_jam_pilihan, "%H:%M").time()
         except:
             pilih_jam()
-        if input_jam_pilihan in jam_tersedia and jam_pilihan>=datetime.datetime.now().time():
-            if tanggal_pilihan>=datetime.datetime.now().day:
+        if input_jam_pilihan in jam_tersedia and (jam_pilihan>=datetime.datetime.now().time() or tanggal_pilihan>=datetime.datetime.now().day):
                 print("success")
                 print_layout('')
                 pilih_kursi()
