@@ -176,7 +176,7 @@ def pilihfilm(opsimenu):
                 print()
 
     def pilih_tanggal():
-        global tanggal_pilihan, df, dataKursi
+        global tanggal_pilihan, df
         #=== BACA DATA TANGGAL
         df = ps.read('Data Jadwal.csv')
         #=== PILIH TANGGAL
