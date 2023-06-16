@@ -217,9 +217,9 @@ def pilihfilm(opsimenu):
                 try: 
                     kursi_pilihan = input("\nPilih kursi anda. Ketik Confirm jika sudah selesai ")
                     kursi_pilihan == kursi_pilihan.lower()
-                    if kursi_pilihan == "confirm" and len(list_kursi_pilihan)==0:
+                    if kursi_pilihan == "Confirm" and len(list_kursi_pilihan)==0:
                         print("Pilih minimal satu kursi")
-                    elif kursi_pilihan == "confirm":
+                    elif kursi_pilihan == "Confirm":
                         print(list_kursi_pilihan)
                         ringkasan_beli()
                         break
