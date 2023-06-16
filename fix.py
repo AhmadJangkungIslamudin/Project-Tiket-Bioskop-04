@@ -61,13 +61,11 @@ def signup():
     begin() 
 
 def menu():
-    global opsi_transaksi
     print("\nKetik '1' Pemesanan tiket")
     print("Ketik '2' Pusat Bantuan")
     print("Ketik '3' Keluar")
     option = input("Pilih menu : ")
     if option == '1':
-        opsi_transaksi = 1
         with open('Daftar Film.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             data = list(reader)
@@ -91,7 +89,6 @@ def menu():
 
 def pusat_bantuan():
     global kode_pembayaran, kode_pembayaran_lama
-    global opsi_transaksi
     kode_pembayaran = (input("Masukan kode unik anda "))
     kode_pembayaran_lama = kode_pembayaran
     sukses = False
