@@ -22,7 +22,6 @@ def begin():
             break
         else:
             print('Input tidak valid')
-            
 
 def login():
     global name
@@ -62,13 +61,11 @@ def signup():
     begin() 
 
 def menu():
-    global opsi_transaksi
     print("\nKetik '1' Pemesanan tiket")
     print("Ketik '2' Pusat Bantuan")
     print("Ketik '3' Keluar")
     option = input("Pilih menu : ")
     if option == '1':
-        opsi_transaksi = 1
         with open('Daftar Film.csv', 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             data = list(reader)
@@ -92,7 +89,6 @@ def menu():
 
 def pusat_bantuan():
     global kode_pembayaran, kode_pembayaran_lama
-    global opsi_transaksi
     kode_pembayaran = (input("Masukan kode unik anda "))
     kode_pembayaran_lama = kode_pembayaran
     sukses = False
@@ -117,7 +113,7 @@ def pusat_bantuan():
                 print("Menu tidak tersedia")
                 pusat_bantuan()
     else:
-        print('gagal')
+        print('Kode unik tidak terdaftar')
         pusat_bantuan()        
 
 def pilihfilm(opsimenu):
@@ -146,15 +142,7 @@ def pilihfilm(opsimenu):
                             (df['judul'] == dfPembelian.iloc[index_pembelian[0],3])].tolist()
 
         list_kursi_pilihan = ast.literal_eval(dfPembelian.values[index_pembelian[0],8])
-
-            #for i in list_kursi_pilihan:
-            #    listdf = df.iloc[index_data[0],5:45]
-            #    listdf.values[list_kursi.index(i)]=1
-            #    df.iloc[index_data[0],5:45] = listdf
         film_dipilih = dfPembelian.iloc[index_pembelian[0],3]
-            #updateKursi = pd.DataFrame(df)
-            #updateKursi.to_csv('test data jadwal.csv',index=False)
-            #print("terupdate")
 
     def print_layout(checklist):
         global index_data
@@ -188,7 +176,7 @@ def pilihfilm(opsimenu):
                 print('Tidak ada jam tayang')
                 pilih_tanggal()
             else:
-                print("success")
+                print("SUCCESS")
                 pilih_jam()
         #misal selain integer eror        
         else:
@@ -210,9 +198,12 @@ def pilihfilm(opsimenu):
             pilih_jam()
 
         if input_jam_pilihan in jam_tersedia and (jam_pilihan>=datetime.datetime.now().time() or tanggal_pilihan>datetime.datetime.now().day):
-            print("success")
+            print("SUCCESS")
             print_layout('')
             pilih_kursi()
+        elif input_jam_pilihan in jam_tersedia and (jam_pilihan<=datetime.datetime.now().time()):
+            print("Jam sudah terlewat")
+            pilih_tanggal()
         else:
             print("Jam tidak tersedia")
             pilih_jam()
@@ -226,9 +217,9 @@ def pilihfilm(opsimenu):
                 try: 
                     kursi_pilihan = input("\nPilih kursi anda. Ketik Confirm jika sudah selesai ")
                     kursi_pilihan == kursi_pilihan.lower()
-                    if kursi_pilihan == "confirm" and len(list_kursi_pilihan)==0:
+                    if kursi_pilihan == "Confirm" and len(list_kursi_pilihan)==0:
                         print("Pilih minimal satu kursi")
-                    elif kursi_pilihan == "confirm":
+                    elif kursi_pilihan == "Confirm":
                         print(list_kursi_pilihan)
                         ringkasan_beli()
                         break
@@ -237,7 +228,6 @@ def pilihfilm(opsimenu):
                     elif kursi_pilihan in list_kursi and df.iloc[index_data[0],5:45].values[list_kursi.index(kursi_pilihan)]==1:
                         list_kursi_pilihan.append(kursi_pilihan)
                         print(list_kursi_pilihan)
-                        #print_layout('v')
                 except:
                     print("Input salah")
         elif opsimenu == '2':
@@ -267,7 +257,6 @@ def pilihfilm(opsimenu):
         
         konfirmasi_bayar = input("Apakah anda ingin melanjutkan pembayaran? (y/n) : ")
         if konfirmasi_bayar == 'y':
-            print("masuk transaksi ygy")
             transaksi(opsimenu)
             return
         elif konfirmasi_bayar != 'y':
@@ -283,7 +272,7 @@ def pilihfilm(opsimenu):
             print(film_dipilih)
             pilih_tanggal()
         except:
-            print("Kesalahan Sistem, mohon coba lagi")
+            print("Kesalahan sistem, mohon coba lagi")
             menu()
     elif opsimenu == '2':
         reset_kursi()
@@ -308,7 +297,6 @@ def transaksi(jenis_transaksi):
         while True:
             konfirmasi_bayar = input("Bayar? (y/n) : ")
             if konfirmasi_bayar == 'y':
-                print("Lanjutt")
                 break
             elif konfirmasi_bayar == 'n':
                 konfirmasi_bayar2 = input('Yakin ingin membatalkan pesanan? (y/n) : ')
@@ -355,7 +343,6 @@ def transaksi(jenis_transaksi):
         
     elif jenis_transaksi =='2':
         kode_pembayaran = kode_pembayaran_lama
-        print("dah masuk ygy")
         ps.konf(name,
                 film_dipilih,
                 datetime.datetime.now().strftime('%H:%M'),
@@ -368,7 +355,6 @@ def transaksi(jenis_transaksi):
         while True:
             konfirmasi_bayar = input("Pesanan sudah benar? (y/n) : ")
             if konfirmasi_bayar == 'y':
-                print("Lanjutt")
                 break
             elif konfirmasi_bayar == 'n':
                 konfirmasi_bayar2 = input('Yakin ingin membatalkan pesanan? (y/n) : ')
@@ -408,9 +394,8 @@ def transaksi(jenis_transaksi):
 
     elif jenis_transaksi =='3':
         while True:
-            konfirmasi_bayar = input("Yakin melakukan refund? (y/n) ")
+            konfirmasi_bayar = input("Yakin melakukan cancel & refund? (y/n) ")
             if konfirmasi_bayar == 'y':
-                print("Lanjutt")
                 break
             elif konfirmasi_bayar == 'n':
                 menu()
@@ -421,7 +406,7 @@ def transaksi(jenis_transaksi):
         dataPembelian.to_csv('riwayat pembelian.csv', index=False)
         print('''
         
-        Refund Berhasil. Terimakasih telah menggunakan aplikasi kami!
+        Cancel & Refund Berhasil. Terimakasih telah menggunakan aplikasi kami!
         
         ''')
     
