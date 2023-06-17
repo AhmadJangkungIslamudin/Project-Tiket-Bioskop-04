@@ -88,7 +88,6 @@ def menu():
     print("Ketik '1' Pemesanan tiket")
     print("Ketik '2' Pusat Bantuan")
     print("Ketik '3' Keluar")
-<<<<<<< HEAD
     option = input("\nPilih menu : ")
     if option == '1':
         opsi_transaksi = 1
@@ -111,34 +110,6 @@ TERIMA KASIH TELAH MENGGUNAKAN LAYANAN ADUDU CINEMAX!
     else:
         print('\nTidak terdapat dalam menu!')
         menu()
-=======
-    while True:
-        option = input("\nPilih menu : ")
-        if option == '1':
-            opsi_transaksi = 1
-            with open('Daftar Film.csv', 'r', encoding='utf-8') as file:
-                reader = csv.reader(file)
-                data = list(reader)
-            column_widths = [max(len(str(item)) for item in column) for column in zip(*data)]
-            for row in data:
-                formatted_row = ' | '.join(f"{item:{width}}" for item, width in zip(row, column_widths))
-                print('='*83)
-                print(formatted_row)
-            print('='*83)
-            pilihfilm('1')
-            break
-        elif option == '2':
-            pusat_bantuan()
-            break
-        elif option == '3':
-            print('''\n====================================================    
-TERIMA KASIH TELAH MENGGUNAKAN LAYANAN ADUDU CINEMAX!
-====================================================\n''')
-            break
-        else:
-            print('\nTidak terdapat dalam menu!')
-            
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
 
 def pusat_bantuan():
     global kode_pembayaran, kode_pembayaran_lama
@@ -157,7 +128,6 @@ def pusat_bantuan():
         print("\nKetik '1' Reschedule")
         print("Ketik '2' Cancel & Refund")
         option = (input("\nPilih menu : "))
-<<<<<<< HEAD
         #while True:
         if option == "1":
             print("Anda memilih RESCHEDULE")
@@ -168,21 +138,6 @@ def pusat_bantuan():
         else:
             print("Menu tidak tersedia")
             pusat_bantuan()
-=======
-        while True:
-            if option == "1":
-                print("Anda memilih RESCHEDULE")
-                pilihfilm('2')
-                break
-            elif option == "2":
-                print("Anda memilih CANCEL & REFUND")
-                pilihfilm('3')
-                break
-            else:
-                print("Menu tidak tersedia")
-                pusat_bantuan()
-                break
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
     else:
         print('gagal')
         pusat_bantuan()        
@@ -220,12 +175,6 @@ def pilihfilm(opsimenu):
         #print(index_data)
         nama_kolom = ["A","B","C","D","E"]
         nama_baris = [1,2,3,4,5,6,7,8]
-<<<<<<< HEAD
-=======
-        print('''\n=====================================
-============    LAYAR    ============\n''')
-        x=0
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
         if opsimenu == '1':
             print('''\n=====================================
 ============    LAYAR    ============\n''')
@@ -248,7 +197,6 @@ def pilihfilm(opsimenu):
         tanggal_tersedia=list(set(df.loc[(df['judul'] == film_dipilih)].tanggal))
         print('\nTanggal')
         print(tanggal_tersedia)
-<<<<<<< HEAD
         try:
             tanggal_pilihan = int(input("\nMasukan Tanggal pilihan : "))
             if tanggal_pilihan in tanggal_tersedia and tanggal_pilihan>=datetime.datetime.now().day:
@@ -263,19 +211,6 @@ def pilihfilm(opsimenu):
                 pilih_tanggal()
         except ValueError:
             print('Input tidak valid')
-=======
-        tanggal_pilihan = int(input("\nMasukan Tanggal pilihan : "))
-        if tanggal_pilihan in tanggal_tersedia and tanggal_pilihan>=datetime.datetime.now().day:
-            if tanggal_pilihan==datetime.datetime.now().day and datetime.datetime.now().time() >= datetime.time(16, 0):
-                print('Tidak ada jam tayang')
-                pilih_tanggal()
-            else:
-                print("success")
-                pilih_jam()
-        #misal selain integer eror        
-        else:
-            print("Tanggal tidak tersedia")
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
             pilih_tanggal()
 
     def pilih_jam():
@@ -352,16 +287,10 @@ def pilihfilm(opsimenu):
             if konfirmasi_bayar == 'y':
                 print("TRANSAKSI")
                 transaksi(opsimenu)
-<<<<<<< HEAD
                 break
             elif konfirmasi_bayar == 'n':
                 menu()
                 break
-=======
-                return
-            elif konfirmasi_bayar == 'n':
-                menu()
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
             else:
                 print('Input tidak valid')
     #=======================================================
@@ -369,7 +298,6 @@ def pilihfilm(opsimenu):
     if opsimenu == "1":
         df = ps.read('Daftar Film.csv')
         # INPUT FILM
-<<<<<<< HEAD
         try:
             inputan=int(input("\nMasukkan no Film (1-6) : "))-1
             if inputan in range (6):
@@ -382,15 +310,6 @@ def pilihfilm(opsimenu):
         except ValueError:
             print('Input tidak valid')
             pilihfilm(opsimenu)
-=======
-        inputan=int(input("\nMasukkan no Film (1-6) : "))-1
-        if inputan in range (6):
-            film_dipilih = df.iloc[inputan,1]
-            print(film_dipilih)
-            pilih_tanggal()
-        else:
-            print('Input tidak valid')
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
     elif opsimenu == '2':
         reset_kursi()
         pilih_tanggal()
@@ -427,10 +346,7 @@ def transaksi(jenis_transaksi):
                 konfirmasi_bayar2 = input('Yakin ingin membatalkan pesanan? (y/n) : ')
                 if konfirmasi_bayar2 == 'y':
                     menu()
-<<<<<<< HEAD
                     break
-=======
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
                 elif konfirmasi_bayar2 != 'n':
                     print('Input tidak valid')
             else:
@@ -486,16 +402,10 @@ Pembayaran Berhasil. Terimakasih telah memesan di ADUDU CINEMAX!
         kode_pembayaran = kode_pembayaran_lama
         ps.konf(name,
                 film_dipilih,
-<<<<<<< HEAD
                 str(input_jam_pilihan),
                 str(tanggal_pilihan)+datetime.datetime.now().strftime('-%m-%Y'),
                 jambeli,
                 tanggalbeli,
-=======
-                jambeli,
-                tanggalbeli,
-                str(tanggal_pilihan)+datetime.datetime.now().strftime('-%m-%Y'),
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
                 list_kursi_pilihan,
                 totalbeli + (0.1 * totalbeli),
                 kode_pembayaran)
@@ -507,7 +417,6 @@ Pembayaran Berhasil. Terimakasih telah memesan di ADUDU CINEMAX!
                 ps.kirim_email_struk(
                     name,
                     film_dipilih,
-<<<<<<< HEAD
                     str(input_jam_pilihan),
                     str(tanggal_pilihan)+datetime.datetime.now().strftime('-%m-%Y'),
                     jambeli,
@@ -516,16 +425,6 @@ Pembayaran Berhasil. Terimakasih telah memesan di ADUDU CINEMAX!
                     totalbeli+(0.1 * totalbeli),
                     kode_pembayaran,
                     email_user)
-=======
-                    jambeli,
-                    tanggalbeli,
-                    str(tanggal_pilihan)+datetime.datetime.now().strftime('-%m-%Y'),
-                    list_kursi_pilihan,
-                    totalbeli + (0.1 * totalbeli),
-                    kode_pembayaran,
-                    email_user
-                )
->>>>>>> bd9312296a8bb79cd7d90788c64fe4cb2f8b5926
                 break
             elif konfirmasi_bayar == 'n':
                 konfirmasi_bayar2 = input('Yakin ingin membatalkan reschedule? (y/n) : ')
