@@ -143,6 +143,7 @@ def pilihfilm(opsimenu):
 
         list_kursi_pilihan = ast.literal_eval(dfPembelian.values[index_pembelian[0],8])
         film_dipilih = dfPembelian.iloc[index_pembelian[0],3]
+        
 
     def print_layout(checklist):
         global index_data

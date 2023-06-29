@@ -4,7 +4,6 @@ import datetime
 import random
 import ast
 import shortcut_pandas as ps
-import re
 
 def begin():
     print("=" * 50)
@@ -74,7 +73,8 @@ def signup():
             with open("login.csv", "a", newline="") as file:
                 writer = csv.writer(file)
                 writer.writerow([name, password,email])
-            begin() 
+            begin()
+            break 
         else:
             print("Kode OTP tidak valid, silahkan input dengan benar!\n")
 
@@ -146,33 +146,46 @@ def pilihfilm(opsimenu):
         global df, film_dipilih,dfPembelian,index_pembelian, list_kursi_pilihan
         dfPembelian = ps.read('riwayat pembelian.csv')
         index_pembelian=dfPembelian.index[(dfPembelian['kode'] == kode_pembayaran)].tolist()                    
-        ps.konf(name,
-                dfPembelian.iloc[index_pembelian[0],3],
-                dfPembelian.iloc[index_pembelian[0],4],
-                str(dfPembelian.iloc[index_pembelian[0],5])+"-"+str(datetime.datetime.now().month)+"-"+str(datetime.datetime.now().year),
-                '-',
-                dfPembelian.iloc[index_pembelian[0],2],
-                dfPembelian.iloc[index_pembelian[0],8],
-                '-',
-                kode_pembayaran)
+        if len(index_pembelian)==1:
+            ps.konf(name,
+                    dfPembelian.iloc[index_pembelian[0],3],
+                    dfPembelian.iloc[index_pembelian[0],4],
+                    str(dfPembelian.iloc[index_pembelian[0],5])+"-"+str(datetime.datetime.now().month)+"-"+str(datetime.datetime.now().year),
+                    '-',
+                    dfPembelian.iloc[index_pembelian[0],2],
+                    dfPembelian.iloc[index_pembelian[0],8],
+                    '-',
+                    kode_pembayaran)
 
-        df = ps.read('Data Jadwal.csv')
-        index_data=df.index[(df['jam'] == dfPembelian.iloc[index_pembelian[0],4]) & 
-                            (df['tanggal'] == dfPembelian.iloc[index_pembelian[0],5])& 
-                            (df['judul'] == dfPembelian.iloc[index_pembelian[0],3])].tolist()
+            df = ps.read('Data Jadwal.csv')
+            index_data=df.index[(df['jam'] == dfPembelian.iloc[index_pembelian[0],4]) & 
+                                (df['tanggal'] == dfPembelian.iloc[index_pembelian[0],5])& 
+                                (df['judul'] == dfPembelian.iloc[index_pembelian[0],3])].tolist()
 
-        list_kursi_pilihan = ast.literal_eval(dfPembelian.values[index_pembelian[0],8])
-        film_dipilih = dfPembelian.iloc[index_pembelian[0],3]
+            list_kursi_pilihan = ast.literal_eval(dfPembelian.values[index_pembelian[0],8])
+            for i in list_kursi_pilihan:
+                listdf = df.iloc[index_data[0],5:45]
+                listdf.values[list_kursi.index(i)]=1
+                df.iloc[index_data[0],5:45] = listdf
+            film_dipilih = dfPembelian.iloc[index_pembelian[0],3]
+            updateKursi = pd.DataFrame(df)
+            updateKursi.to_csv('Data Jadwal.csv',index=False)
+            print("terupdate")
+            list_kursi_pilihan = []
+        else:
+            print("Kode pembayaran tidak ditemukan")
+            pusat_bantuan()
 
     def print_layout(checklist):
         global index_data
         index_data=df.index[(df['jam'] == input_jam_pilihan) & (df['tanggal'] == tanggal_pilihan)& (df['judul'] == film_dipilih)].tolist()
         nama_kolom = ["A","B","C","D","E"]
         nama_baris = [1,2,3,4,5,6,7,8]
-        if opsimenu == '1':
-            print('''\n=====================================
+        
+        print('''\n=====================================
 ============    LAYAR    ============\n''')
-            x=0
+        x=0
+        if opsimenu == '1' or opsimenu == '2':
             for i in nama_kolom:
                 for j in nama_baris:
                     if df.iloc[index_data[0],5:45].values[x] == 1:
@@ -226,7 +239,7 @@ def pilihfilm(opsimenu):
             pilih_jam()
 
     def pilih_kursi():
-        if opsimenu == '1':
+        if opsimenu == '1' or opsimenu == '2':
             df = ps.read('Data Jadwal.csv')
             while True:
                 try:
@@ -245,8 +258,6 @@ def pilihfilm(opsimenu):
                 except ValueError:
                     print('Input tidak valid')
                     pilih_kursi()
-        elif opsimenu == '2':
-            ringkasan_beli()
     
 #==== Ringkasan beli
     def ringkasan_beli():
